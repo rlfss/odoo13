@@ -69,18 +69,18 @@ class SaleOrder(models.Model):
                     if 'express' not in line.name.lower():
                         
                         line.discount = order.discount_rate
-            else:
-                total = discount = 0.0
-                for line in order.order_line:
-                    if 'express' not in line.name.lower():
-                        total += round((line.product_uom_qty * line.price_unit))
-                if order.discount_rate != 0:
-                    discount = (order.discount_rate / total) * 100
-                else:
-                    discount = order.discount_rate
-                for line in order.order_line:
-                    if 'express' not in line.name.lower():
-                        line.discount = discount
+            #else:
+            #    total = discount = 0.0
+            #    for line in order.order_line:
+            #        if 'express' not in line.name.lower():
+            #            total += round((line.product_uom_qty * line.price_unit))
+            #    if order.discount_rate != 0:
+            #        discount = (order.discount_rate / total) * 100
+            #    else:
+            #        discount = order.discount_rate
+            #    for line in order.order_line:
+            #        if 'express' not in line.name.lower():
+            #            line.discount = discount
 
     def _prepare_invoice(self,):
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
