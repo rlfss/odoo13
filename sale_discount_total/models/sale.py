@@ -37,7 +37,10 @@ class SaleOrder(models.Model):
             for line in order.order_line:
                 amount_untaxed += line.price_subtotal
                 amount_tax += line.price_tax
-                amount_discount += (line.product_uom_qty * line.price_unit * line.discount) / 100
+                if order.discount_type='percent':
+                    amount_discount += (line.product_uom_qty * line.price_unit * line.discount) / 100
+                else:
+                    amount_discount = order.discount_rate
             order.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
