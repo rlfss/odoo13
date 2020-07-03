@@ -37,10 +37,7 @@ class SaleOrder(models.Model):
             for line in order.order_line:
                 amount_untaxed += line.price_subtotal
                 amount_tax += line.price_tax
-                if order.discount_type='percent':
-                    amount_discount += (line.product_uom_qty * line.price_unit * line.discount) / 100
-                else:
-                    amount_discount = order.discount_rate
+                amount_discount += (line.product_uom_qty * line.price_unit * line.discount) / 100
             order.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
@@ -72,18 +69,18 @@ class SaleOrder(models.Model):
                     if 'express' not in line.name.lower():
                         
                         line.discount = order.discount_rate
-            #else:
-            #    total = discount = 0.0
-            #    for line in order.order_line:
-            #        if 'express' not in line.name.lower():
-            #            total += round((line.product_uom_qty * line.price_unit))
-            #    if order.discount_rate != 0:
-            #        discount = (order.discount_rate / total) * 100
-            #    else:
-            #        discount = order.discount_rate
-            #    for line in order.order_line:
-            #        if 'express' not in line.name.lower():
-            #            line.discount = discount
+            else:
+                total = discount = 0.0
+                for line in order.order_line:
+                    if 'express' not in line.name.lower():
+                        total += round((line.product_uom_qty * line.price_unit))
+                if order.discount_rate != 0:
+                    discount = (order.discount_rate / total) * 100
+                else:
+                    discount = order.discount_rate
+                for line in order.order_line:
+                    if 'express' not in line.name.lower():
+                        line.discount = discount
 
     def _prepare_invoice(self,):
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
