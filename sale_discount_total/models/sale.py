@@ -66,17 +66,21 @@ class SaleOrder(models.Model):
         for order in self:
             if order.discount_type == 'percent':
                 for line in order.order_line:
-                    line.discount = order.discount_rate
+                    if 'expres' not in line.name.lower():
+                        
+                        line.discount = order.discount_rate
             else:
                 total = discount = 0.0
                 for line in order.order_line:
-                    total += round((line.product_uom_qty * line.price_unit))
+                    if 'expres' not in line.name.lower():
+                        total += round((line.product_uom_qty * line.price_unit))
                 if order.discount_rate != 0:
                     discount = (order.discount_rate / total) * 100
                 else:
                     discount = order.discount_rate
                 for line in order.order_line:
-                    line.discount = discount
+                    if 'expres' not in line.name.lower():
+                        line.discount = discount
 
     def _prepare_invoice(self,):
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
@@ -100,5 +104,5 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    discount = fields.Float(string='Discount (%)', digits=(16, 20), default=0.0)
+    discount = fields.Float(string='Discount (%)', digits=(16, 2), default=0.0)
 
