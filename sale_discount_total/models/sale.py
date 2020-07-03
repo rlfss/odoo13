@@ -35,7 +35,8 @@ class SaleOrder(models.Model):
         for order in self:
             amount_untaxed = amount_tax = amount_discount = 0.0
             for line in order.order_line:
-                amount_untaxed += line.price_subtotal
+                #amount_untaxed += line.price_subtotal
+                amount_untaxed += line.price_unit*line.product_uom_qty
                 amount_tax += line.price_tax
                 amount_discount += (line.product_uom_qty * line.price_unit * line.discount) / 100
             order.update({
