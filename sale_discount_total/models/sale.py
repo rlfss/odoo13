@@ -43,7 +43,7 @@ class SaleOrder(models.Model):
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
                 'amount_discount': amount_discount,
-                'amount_total': amount_untaxed + amount_tax,
+                'amount_total': amount_untaxed + amount_tax - amount_discount,
             })
 
 
