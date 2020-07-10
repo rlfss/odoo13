@@ -105,8 +105,8 @@ class AccountInvoice(models.Model):
             move.amount_residual = -sign * (total_residual_currency if len(currencies) == 1 else total_residual) - move.amount_discount
             move.amount_untaxed_signed = -total_untaxed
             move.amount_tax_signed = -total_tax
-            move.amount_total_signed = -total
-            move.amount_residual_signed = total_residual
+            move.amount_total_signed = -total+move.amount_discount
+            move.amount_residual_signed = total_residual+move.amount_discount
 
             currency = len(currencies) == 1 and currencies.pop() or move.company_id.currency_id
             is_paid = currency and currency.is_zero(move.amount_residual) or not move.amount_residual
