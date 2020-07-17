@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
         Compute the total amounts of the SO.
         """
         for order in self:
-            amount_untaxed = amount_tax = amount_discount = 0.0
+            amount_untaxed = amount_tax = amount_discount = amount_total_value = 0.0
             for line in order.order_line:
                 amount_untaxed += line.price_subtotal
                 amount_tax += line.price_tax
