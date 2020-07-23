@@ -3,20 +3,19 @@
     'name': "device",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        客户端来建一笔记录，传device id上来，odoo返回记录id； odoo根据新建记录的，如果quota>0,odoo发device id向服务器申请key，客户端再来查询key""",
 
     'description': """
-        Long description of module's purpose
+        Device key request
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Awahuang",
+    'website': "http://www.anviz.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Uncategorized',
+    'category': 'Customize',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
