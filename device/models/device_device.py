@@ -1,5 +1,6 @@
 from odoo import fields, models, api
 import requests
+from odoo import fields
 import json
 import sys
 #if sys.__stdin__.isatty():
@@ -124,9 +125,17 @@ class Device(models.Model):
             platform = 'a20'
         device_exist = self.env['device.device'].search([('id', '!=', new_id.id), ('device_id', '=', new_id.device_id)])
         if device_exist:
-            new_id.device_id = new_id.device_id + '_duplicate'
+            #new_id.device_id = new_id.device_id + '_duplicate'
             return new_id
         else:
-            self._request_key(new_id, platform)
-        return new_id
+            if self._request_key(new_id, platform):
+                return new_id
+            else:
+                new_id.device_id = new_id.device_id + '_get_key_fail' + fields.Datetime.now()
+                return new_id
+
+
+
+
+
 
