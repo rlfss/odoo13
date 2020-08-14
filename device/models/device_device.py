@@ -49,7 +49,7 @@ class Device(models.Model):
             url = ''.join([host, endpoint])
             r1 = requests.post(url, data={'client_key': client_key, 'client_secret': client_secret})
             token = r1.json()['data']['token']
-            print('token',token)
+            print('token', token)
             if token:
                 endpoint = r"/service/auth"
                 url = ''.join([host, endpoint])
@@ -63,20 +63,20 @@ class Device(models.Model):
 
                     # r = requests.post(url,headers=headers,data=json.dumps(body))
                     r = requests.post(url, headers=headers, json=body)
-                    print('r.text',r.text)
-                    print('return',r.json()['code'])
+                    print('r.text', r.text)
+                    print('return', r.json()['code'])
                     if r.json()['code'] == 0:
                         return_data = r.json()['data']
                         print(return_data)
                         return return_data
                     else:
-                        return 0
+                        return False
                 except:
-                    return 0
+                    return False
             else:
-                return 0
+                return False
         except:
-            return 0
+            return False
 
 
 
@@ -110,7 +110,7 @@ class Device(models.Model):
                 device.platform = return_data['platform']
 
             else:
-                return 0
+                return False
     @api.model
     def create(self, vals):
         new_id = super(Device, self).create(vals)
@@ -122,7 +122,11 @@ class Device(models.Model):
             platform = 'facepass'
         else:
             platform = 'a20'
-        self._request_key(new_id, platform)
-
+        device_exist = self.env['device.device'].search([('id', '!=', new_id.id), ('device_id', '=', new_id.device_id)])
+        if device_exist:
+            new_id.device_id = new_id.device_id + '_duplicate'
+            return new_id
+        else:
+            self._request_key(new_id, platform)
         return new_id
 
