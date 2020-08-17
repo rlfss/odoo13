@@ -109,6 +109,7 @@ class Device(models.Model):
 
                 device.restkeycount = return_data['restKeyCount']
                 device.platform = return_data['platform']
+                return True
 
             else:
                 return False
@@ -128,7 +129,10 @@ class Device(models.Model):
             #new_id.device_id = new_id.device_id + '_duplicate'
             return new_id
         else:
-            if self._request_key(new_id, platform):
+            return_key = self._request_key(new_id, platform)
+            print("retrun_key",return_key)
+
+            if return_key:
                 return new_id
             else:
                 new_id.device_id = new_id.device_id + '_get_key_fail' + str(fields.Datetime.now())
