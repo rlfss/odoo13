@@ -131,7 +131,7 @@ class Device(models.Model):
             if self._request_key(new_id, platform):
                 return new_id
             else:
-                new_id.device_id = new_id.device_id + '_get_key_fail' + fields.Datetime.now()
+                new_id.device_id = new_id.device_id + '_get_key_fail' + str(fields.Datetime.now())
                 return new_id
 
 
