@@ -11,6 +11,7 @@
                      <field name="platform"  />
                     <field name="server_quota" />
                     <field name="active" />
+                    <field name="version"/>
                     <!--field name="device_id" widget="many2many_tags" /-->
                 </group>
             </form>
@@ -26,6 +27,7 @@
                  <field name="platform"  />
                 <field name="server_quota" />
                 <field name="active" />
+                <field name="version"/>
                 <!--field name="device_id" widget="many2many_tags" /-->
             </tree>
         </field>

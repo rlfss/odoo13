@@ -9,4 +9,5 @@ class Server(models.Model):
     active = fields.Boolean('Active?', default=True)
     server_quota = fields.Integer()
     platform = fields.Char('Platform', required=True)
+    version = fields.Float()
     device_id = fields.Many2many('device.device', string='Device')

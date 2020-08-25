@@ -130,7 +130,7 @@ class Device(models.Model):
             return new_id
         else:
             return_key = self._request_key(new_id, platform)
-            print("retrun_key",return_key)
+            print("retrun_key", return_key)
 
             if return_key:
                 return new_id
