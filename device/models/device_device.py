@@ -21,6 +21,8 @@ class Device(models.Model):
     device_key4 = fields.Char()
     device_key5 = fields.Char()
     restkeycount = fields.Integer()
+    manufacture_order = fields.Char()
+    auth_remain_qty = fields.Integer()
     #_sql_constraints = [
     #   ('device_id', 'unique(device_id)', 'Device ID already exists!')
     #]
@@ -82,23 +84,24 @@ class Device(models.Model):
 
 
     #@api.onchange('server_id', 'device_id')
-    def _request_key(self, device,platform):
+    def _request_key(self, device,platform,mo,qty):
         #a20_id = '373734bb2920013106060809ffff0303'
         print('device_id', device.device_id)
         print('server_id', device.server_id.id)
+        used_qty = self.env['device.device'].search_count([('manufacture_order', '=', mo), ('id', '!=', device.id), ('device_id', 'not like', '_get_key_fail')])
         server = self.env['device.server'].search([('id', '=', device.server_id.id)])
-        print('server search return', server)
-        print('quota', server.server_quota)
+        print('mo_qty', qty)
+        print('used_qty', used_qty)
 
 
-        if server.server_quota>0 and server.platform == platform:
+        if qty > used_qty and server.platform == platform:
 
             return_data = Device.get_key(device.device_id)
             print('return_data', return_data)
 
             if 'key1'in return_data:
                 if return_data['key1']:
-                    server.server_quota -= 1
+                    #server.server_quota -= 1
                     device.device_key1 = str(return_data['key1'])
                     if return_data['platform'] == 'a20':
 
@@ -109,6 +112,7 @@ class Device(models.Model):
 
                 device.restkeycount = return_data['restKeyCount']
                 device.platform = return_data['platform']
+                device.auth_remain_qty = qty - 1
                 return True
 
             else:
@@ -120,16 +124,23 @@ class Device(models.Model):
         #device = self.browse(new_id)
         print('create id ', new_id)
         print('device_id', new_id.device_id)
+        print('mo', new_id.manufacture_order)
+        print('auth_remain_qty', new_id.auth_remain_qty)
         if 'facepass' in new_id.device_id:
             platform = 'facepass'
         else:
             platform = 'a20'
         device_exist = self.env['device.device'].search([('id', '!=', new_id.id), ('device_id', '=', new_id.device_id)])
+        mp = self.env['mrp.production']
+        id_needed = mp.search([('origin', '=', new_id.manufacture_order), ('state', '=', 'progress')]).id
+        new = mp.browse(id_needed)
+        mo_qty = new.product_qty
+        print('mo_qty',new.product_qty)
         if device_exist:
             #new_id.device_id = new_id.device_id + '_duplicate'
             return new_id
         else:
-            return_key = self._request_key(new_id, platform)
+            return_key = self._request_key(new_id, platform, new_id.manufacture_order, mo_qty)
             print("retrun_key", return_key)
 
             if return_key:

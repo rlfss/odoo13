@@ -18,6 +18,8 @@
                     <field name="device_key4" />
                     <field name="device_key5" />
                     <field name="restkeycount" />
+                    <field name="manufacture_order" />
+                    <field name="auth_remain_qty" />
 
                 </group>
             </form>
@@ -40,6 +42,8 @@
                 <field name="device_key4" />
                 <field name="device_key5" />
                 <field name="restkeycount" />
+                <field name="manufacture_order" />
+                <field name="auth_remain_qty" />
             </tree>
         </field>
     </record>
