@@ -95,24 +95,26 @@ class Device(models.Model):
 
             return_data = Device.get_key(device.device_id)
             print('return_data', return_data)
-
-            if 'key1'in return_data:
-                if return_data['key1']:
-                    server.server_quota -= 1
-                    device.device_key1 = str(return_data['key1'])
-                    if return_data['platform'] == 'a20':
-
-                        device.device_key2 = str(return_data['key2'])
-                        device.device_key3 = str(return_data['key3'])
-                        device.device_key4 = str(return_data['key4'])
-                        device.device_key5 = str(return_data['key5'])
-
-                device.restkeycount = return_data['restKeyCount']
-                device.platform = return_data['platform']
-                return True
-
-            else:
+            if return_data == False:
                 return False
+            else:
+                if 'key1'in return_data:
+                    if return_data['key1']:
+                        server.server_quota -= 1
+                        device.device_key1 = str(return_data['key1'])
+                        if return_data['platform'] == 'a20':
+
+                            device.device_key2 = str(return_data['key2'])
+                            device.device_key3 = str(return_data['key3'])
+                            device.device_key4 = str(return_data['key4'])
+                            device.device_key5 = str(return_data['key5'])
+
+                    device.restkeycount = return_data['restKeyCount']
+                    device.platform = return_data['platform']
+                    return True
+
+                else:
+                    return False
     @api.model
     def create(self, vals):
         new_id = super(Device, self).create(vals)
