@@ -142,6 +142,9 @@ class TierValidation(models.AbstractModel):
         even when the record is under validation."""
         exceptions = self._get_under_validation_exceptions()
         for val in vals:
+            print("exceptions", exceptions)
+            print('val', val)
+
             if val not in exceptions:
                 return False
         return True
