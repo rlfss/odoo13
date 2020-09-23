@@ -40,4 +40,4 @@ class MrpWorkorder(models.Model):
                     workorder.production_id.with_context(force_date=True).write({
                         'date_planned_finished': fields.Datetime.to_datetime(values['date_planned_finished'])
                     })
-        return super(MrpWorkorder, self).write(values)
+        return #super(MrpWorkorder, self).write(values)
