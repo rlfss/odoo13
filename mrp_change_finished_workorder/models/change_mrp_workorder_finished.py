@@ -6,8 +6,7 @@ from math import floor
 from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.exceptions import UserError
 from odoo.tools import float_compare, float_round
-class change_finished_workorder(models.Model):
-    _name = 'changefinishedworkorder'
+class MrpWorkorder(models.Model):
     _description = 'Change Work Order done'
     _inherit = ['mrp.workorder']
 
