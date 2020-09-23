@@ -11,7 +11,7 @@ class change_finished_workorder(models.Model):
     _description = 'Change Work Order done'
     _inherit = ['mrp.workorder']
 
-    @api.multi
+    @api.model
     def write(self, values):
         if 'production_id' in values:
             raise UserError(_('You cannot link this work order to another manufacturing order.'))
