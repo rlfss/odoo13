@@ -10,7 +10,7 @@ class MrpWorkorder(models.Model):
     _description = 'Change Work Order done'
     _inherit = ['mrp.workorder']
 
-    @api.model
+    #@api.model
     def write(self, values):
         if 'production_id' in values:
             raise UserError(_('You cannot link this work order to another manufacturing order.'))
@@ -40,4 +40,4 @@ class MrpWorkorder(models.Model):
                     workorder.production_id.with_context(force_date=True).write({
                         'date_planned_finished': fields.Datetime.to_datetime(values['date_planned_finished'])
                     })
-        return #super(MrpWorkorder, self).write(values)
+        return super(MrpWorkorder, self).write(values)
