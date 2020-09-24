@@ -15,5 +15,5 @@ class ChangeWorkorder(models.Model):
 
         if list(values.keys()) != ['time_ids'] and any(workorder.state == 'don' for workorder in self):
             raise UserError(_('You can not change the finished work order.'))
-        record = super().write(values)
-        return record
+
+        return super(ChangeWorkorder, self).write(values)
