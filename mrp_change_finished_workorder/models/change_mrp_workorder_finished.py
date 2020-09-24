@@ -13,8 +13,9 @@ class MrpWorkorder(models.Model):
     @api.model
     def write(self, values):
         res = super(MrpWorkorder, self).write(values)
-        for rec in res:
+        print('res',res)
+        #for rec in res:
 
-            _logger.info(rec.id)
+        #    _logger.info(rec.id)
 
         return res
