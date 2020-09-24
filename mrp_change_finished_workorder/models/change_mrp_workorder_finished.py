@@ -10,9 +10,8 @@ class MrpWorkorder(models.Model):
     _description = 'Change Work Order done'
     _inherit = ['mrp.workorder']
 
-    @api.model
     def write(self, values):
 
         if list(values.keys()) != ['time_ids'] and any(workorder.state == 'done' for workorder in self):
             raise UserError(_('You can not change the finished work order.'))
-        return super(MrpWorkorder).write(values)
+        return super(MrpWorkorder, self).write(values)
