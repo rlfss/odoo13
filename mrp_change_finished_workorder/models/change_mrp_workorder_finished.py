@@ -6,7 +6,8 @@ from math import floor
 from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.exceptions import UserError
 from odoo.tools import float_compare, float_round
-class MrpWorkorder(models.Model):
+class ChangeWorkorder(models.Model):
+    _name = 'changeworkorder'
     _description = 'Change Work Order done'
     _inherit = ['mrp.workorder']
 
@@ -14,4 +15,4 @@ class MrpWorkorder(models.Model):
 
         if list(values.keys()) != ['time_ids'] and any(workorder.state == 'don' for workorder in self):
             raise UserError(_('You can not change the finished work order.'))
-        return super(MrpWorkorder, self).write(values)
+        return super(ChangeWorkorder, self).write(values)
