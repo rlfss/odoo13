@@ -15,4 +15,4 @@ class MrpWorkorder(models.Model):
 
         if list(values.keys()) != ['time_ids'] and any(workorder.state == 'done' for workorder in self):
             raise UserError(_('You can not change the finished work order.'))
-        return super("MrpWorkorder").write(values)
+        return super(MrpWorkorder).write(values)
