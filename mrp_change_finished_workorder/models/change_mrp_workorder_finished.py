@@ -12,6 +12,7 @@ class MrpWorkorder(models.Model):
 
     @api.model
     def write(self, values):
+        res = super(MrpWorkorder, self).write(values)
         if 'production_id' in values:
             raise UserError(_('You cannot link this work order to another manufacturing order.'))
         if 'workcenter_id' in values:
@@ -40,4 +41,4 @@ class MrpWorkorder(models.Model):
                     workorder.production_id.with_context(force_date=True).write({
                         'date_planned_finished': fields.Datetime.to_datetime(values['date_planned_finished'])
                     })
-        return super(MrpWorkorder, self).write(values)
+        return res
