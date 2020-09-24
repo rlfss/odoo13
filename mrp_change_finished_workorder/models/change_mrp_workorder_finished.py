@@ -12,8 +12,8 @@ class MrpWorkorder(models.Model):
 
     @api.model
     def write(self, values):
-
-        if list(values.keys()) != ['time_ids'] and any(workorder.state == 'don' for workorder in self):
+        res = super(MrpWorkorder, self).write(values)
+        if list(values.keys()) != ['time_ids'] and any(res.state == 'don' for res in self):
             raise UserError(_('You can not change the finished work order TEST.'))
 
-        return super().write(values)
+        return res
