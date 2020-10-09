@@ -143,7 +143,7 @@ class TierValidation(models.AbstractModel):
         exceptions = self._get_under_validation_exceptions()
         for val in vals:
             if val == "order_line":
-                for key in vals['order_line'][0][2].keys():
+                for key in vals['order_line'][1][2].keys():
                     if key not in exceptions:
                         return False
             if val not in exceptions:
