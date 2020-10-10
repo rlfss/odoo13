@@ -148,9 +148,9 @@ class TierValidation(models.AbstractModel):
                     if i[2]:
                         for key in i[2].keys():
                             keys.append(key)
-                for except_field in keys:
-                    if except_field not in exceptions:
-                        return False
+                #for except_field in keys:
+                #    if except_field not in exceptions:
+                #        return False
             if val not in exceptions:
                 return False
         return True
