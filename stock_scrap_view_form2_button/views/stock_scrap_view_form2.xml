@@ -1,0 +1,14 @@
+<odoo>
+    <record id="stock_scrap_view_form2_button" model="ir.ui.view">
+        <field name="name">stock.scrap.view.form2.button</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view2"/>
+        <field name="arch" type="xml">
+          <!-- find field description and add the field
+              idea_ids after it -->
+          <button name="action_validate" position="replace">
+             <button string="Save" class="btn-secondary" special="save"/>
+          </button>
+        </field>
+    </record>
+</odoo>
