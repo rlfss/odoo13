@@ -149,11 +149,11 @@ class TierValidation(models.AbstractModel):
                         for key in i[2].keys():
                             #print(key)
                             keys.append(key)
-                for key in keys:
+                #for key in keys:
 
                 #for key in vals['order_line'][1][2].keys():
-                    if key not in exceptions:
-                        return False
+                 #   if key not in exceptions:
+                 #       return False
             if val not in exceptions:
                 return False
         return True
